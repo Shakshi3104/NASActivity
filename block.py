@@ -114,7 +114,7 @@ def MBConvBlock(repeats, kernel_size, filters_in, filters_out, expand_ratio, ski
     # check inputs
     assert skip_op in [None, "pool", "identity"], "{} is not valid skip_op".format(skip_op)
 
-    def __block(x, filters_in=filters_in, strides=filters_out):
+    def __block(x, filters_in=filters_in, strides=strides):
         for i in range(repeats):
             # The first block needs to take care of stride and filter size increase
             if i > 0:
