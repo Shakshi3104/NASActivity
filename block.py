@@ -133,7 +133,7 @@ def MBConvBlock(repeats, kernel_size, filters_in, filters_out, expand_ratio, ski
                        )(x)
 
             if skip_op == "pool":
-                x = MaxPooling1D(name="block{}{}_pool".format(block_id, chr(i + 97)))(x)
+                x = MaxPooling1D(name="block{}{}_pool".format(block_id, chr(i + 97)), padding="same")(x)
 
         return x
 
@@ -192,7 +192,7 @@ def ConvBlock(repeats, kernel_size, filters, skip_op, strides, se_ratio, block_i
 
         # skip operation
         if skip_op == "pool":
-            x = MaxPooling1D(name="block{}_pool".format(block_id))(x)
+            x = MaxPooling1D(name="block{}_pool".format(block_id), padding="same")(x)
         elif skip_op == "identity":
             if strides == 1:
                 shortcut = inputs
@@ -260,7 +260,7 @@ def SeparableConvBlock(repeats, kernel_size, skip_op, strides, se_ratio, block_i
 
         # skip operation
         if skip_op == "pool":
-            x = MaxPooling1D(name="block{}_pool".format(block_id))(x)
+            x = MaxPooling1D(name="block{}_pool".format(block_id), padding="same")(x)
         elif skip_op == "identity":
             if strides == 1:
                 shortcut = inputs
