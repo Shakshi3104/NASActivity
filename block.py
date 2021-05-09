@@ -114,21 +114,17 @@ def MBConvBlock(repeats, kernel_size, filters_in, filters_out, expand_ratio, ski
     # check inputs
     assert skip_op in [None, "pool", "identity"], "{} is not valid skip_op".format(skip_op)
 
-    def __block(x, filters_in=filters_in, strides=strides):
+    def __block(x):
         for i in range(repeats):
             # The first block needs to take care of stride and filter size increase
-            if i > 0:
-                strides = 1
-                filters_in = filters_out
-
             x = MBConv(activation="relu", drop_rate=0.2,
                        name="block{}{}_".format(block_id, chr(i + 97)),
                        kernel_size=kernel_size,
-                       filters_in=filters_in,
+                       filters_in=filters_in if i == 0 else filters_out,
                        filters_out=filters_out,
                        expand_ratio=expand_ratio,
                        id_skip=True if skip_op == "identity" else False,
-                       strides=strides,
+                       strides=strides if i == 1 else 1,
                        se_ratio=se_ratio
                        )(x)
 
