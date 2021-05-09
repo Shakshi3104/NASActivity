@@ -40,7 +40,7 @@ def MBConv(activation="relu", drop_rate=0., kernel_size=3, filters_in=32, filter
         # Depthwise Convolution
         conv_pad = 'same'
         x = SeparableConv1D(
-            int(x.shape[-1]),
+            int(x.shape[-1]) if expand_ratio != 1 else filters,
             kernel_size,
             strides,
             padding=conv_pad,
