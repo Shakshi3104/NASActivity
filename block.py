@@ -40,7 +40,7 @@ def MBConv(activation="relu", drop_rate=0., kernel_size=3, filters_in=32, filter
         # Depthwise Convolution
         conv_pad = 'same'
         x = SeparableConv1D(
-            int(x.shape[-1]) if expand_ratio != 1 else filters,
+            int(x.shape[-1]) if expand_ratio != 1 else filters_in,
             kernel_size,
             strides,
             padding=conv_pad,
@@ -124,7 +124,7 @@ def MBConvBlock(repeats, kernel_size, filters_in, filters_out, expand_ratio, ski
                        filters_out=filters_out,
                        expand_ratio=expand_ratio,
                        id_skip=True if skip_op == "identity" else False,
-                       strides=strides if i == 1 else 1,
+                       strides=strides if i == 0 else 1,
                        se_ratio=se_ratio
                        )(x)
 
